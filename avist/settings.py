@@ -55,7 +55,7 @@ ROOT_URLCONF = 'avist.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['/Users/Septien/Documents/Tesis/code/AVisTService/avist/visAnalytics/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
