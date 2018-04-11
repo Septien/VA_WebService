@@ -1,0 +1,15 @@
+<!-- Histogram ______________________________________________________________________________________________________________-->
+<fieldset class="graph" name="hist" id="{{ histogramid }}">
+    <legend class="graphLabel">Histogram</legend>
+    <div class="fit-distribution">
+        <label for="prob-dist"><abbr title="Fit one of the following probability distributions in the histogram. Draws it on the plot.">Fit</abbr> 
+        probability distribution:</label>
+        <select class="distribution" name="distribution-prob" id="prob-dist">
+            <option value="none" selected="selected">&nbsp;</option>
+            <option value="uniform">Uniform distribution</option>
+            <option value="gaussian">Normal distribution</option>
+        </select>
+        <label for="nums">Number of bins:</label>
+        <input type="number" name="Numbers" id="nums" min="{{ minB }}" max="{{ maxB }}" step="1" value="{{ numbins }}">
+    </div>
+</fieldset>
