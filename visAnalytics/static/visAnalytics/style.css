@@ -1,0 +1,56 @@
+/* For the main body of the document */
+.form-main, .va {
+    background-color: lightyellow;
+    text-align: center;
+    align-content: center;
+    color: black;
+    padding: 0.5%;
+    overflow: auto;
+}
+
+/* The title of the page */
+h1 {
+    font-family: Georgia;
+    color: Peru;/*Crimson; MediumSeaGreen;*/
+}
+
+/* For the labels of the graphs */
+.label {
+    font-family: Arial;
+    font-size: 1.5em;
+    transform: translateX(1.5em);
+}
+
+.selecting {
+    height: 2em;
+}
+
+/* Style the button for uploading databases */
+.dbbutton {
+    width: 100px;
+    height: 25px;
+}
+
+/* For the area containing all the graphs */
+.plots {
+    overflow: auto;
+    align-content: center;
+    align-items: center;
+    padding: 0.5%;
+}
+
+/* For the rectangle containing the graphs */
+.graph {
+    background-color: lightblue;
+    padding: 3%;
+    width: 43%;
+    height: 400px;
+    font-family: sans-serif;
+    float: left;
+
+}
+
+/* Style the label of the graphs */
+.graphLabel {
+    color: rgb(0, 0, 230);
+}

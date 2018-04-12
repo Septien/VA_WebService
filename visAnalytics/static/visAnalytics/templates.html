@@ -1,0 +1,49 @@
+            <p>Hello there! :)</p>
+
+            <!-- Histogram ______________________________________________________________________________________________________________-->
+            <fieldset class="graph" name="hist" id="histogramplot">
+                <legend class="graphLabel">Histogram</legend>
+                <p>Histogram plot</p>
+                <div class="fit-distribution">
+                    <label for="prob-dist"><abbr title="Fit one of the following probability distributions in the histogram. Draws it on the plot.">Fit</abbr> 
+                    probability distribution:</label>
+                    <select class="distribution" name="distribution-prob" id="prob-dist">
+                        <option value="none" selected="selected">&nbsp;</option>
+                        <option value="uniform">Uniform distribution</option>
+                        <option value="gaussian">Normal distribution</option>
+                    </select>
+                    <label for="nums">Number of bins:</label>
+                    <input type="number" name="Numbers" id="nums" min="0" max="100" step="1" value="50">
+                </div>
+            </fieldset>
+
+            <!-- Gauge __________________________________________________________________________________________________________________-->
+            <fieldset class="graph" name="gauge" id="gaugeP">
+                <legend class="graphLabel">Gauge</legend>
+                <p>Gauge, yay!. Useful on streaming data.</p>
+            </fieldset>
+
+            <!-- Lineplot _______________________________________________________________________________________________________________-->
+            <fieldset class="graph" name="linePlot" id="lineP">
+                <legend class="graphLabel">LinePlot</legend>
+                <p>A line plot</p>
+                <input type="button" name="addLine" value="Add Line">
+            </fieldset>
+
+            <!-- Scatterplot _____________________________________________________________________________________________________________-->
+            <fieldset class="graph" name="scatter" id="scPlot">
+                <legend class="graphLabel"><abbr title="2D scatter plot">Scatterplot</abbr></legend>
+                <input type="checkbox" name="fitAdj" id="adjustment"><label>Fit Adjustment</label>
+            </fieldset>
+
+            <!-- Osciloscope ____________________________________________________________________________________________________________-->
+            <fieldset class="graph" name="osciloscope" id="oscPlot">
+                <legend class="graphLabel">Osciloscope</legend>
+                <p>Graph for the osciloscope, useful only on streaming.</p>
+            </fieldset>
+
+            <!-- Pieplot ________________________________________________________________________________________________________________-->
+            <fieldset class="graph" name="pieplot" id="piept">
+                <legend class="graphLabel">Pieplot</legend>
+                <p>Here will be the pieplot</p>
+            </fieldset>
