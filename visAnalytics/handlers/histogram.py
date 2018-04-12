@@ -26,21 +26,22 @@ class Histogram():
         self.binWidth = 0
         self.numBins = 0
 
-    def loadDataFromFile(self, filename):
+    def loadDataFromFile(self, filename, axis=0):
         """
         Loads the data and computes the range of the column
         """
         # Load
-        with open(dbName) as dataFile:
+        file = "/Users/Septien/Documents/Tesis/code/data/" + filename + ".data"
+        with open(file) as dataFile:
             for line in dataFile:
                 row = line.split(",")
-                d = row[i]
+                d = row[axis]
                 if (d != '?'):
-                    data.append(data)
+                    self.data.append(float(d))
         # Sort for further computation
-        data.sort()
+        self.data.sort()
         # Get the range
-        self.xAxisRange = [data[0], data[-1]]
+        self.xAxisRange = [self.data[0], self.data[-1]]
 
     def computeNumClass(self):
         """
@@ -50,18 +51,28 @@ class Histogram():
         Where: IQ = interquatile range; n -> number of data
         """
         # Get the number of data
-        n = data.length()
+        n = len(self.data)
         # For IQR
         # First, compute the position of the first and third quartile
         fQPos = ( (n - 1) / 4 ) + 1
         tQPos = ( (3 * (n - 1)) / 4 ) + 1
-        # Get the quartile
-        firstQ = data[fQPos]
-        thirdQ = data[tQPos]
+        # Get the quartiles
+        firstQ = 0.0
+        thirdQ = 0.0
+        if fQPos == round(fQPos):
+            firstQ = self.data[int(fQPos)]
+        else:
+            up = round(fQPos)
+            firstQ = self.data[up - 1] + ((self.data[up - 1] - self.data[up]) / 4.0)
+        if tQPos == round(tQPos):
+            thirdQ = self.data[int(tQPos)]
+        else:
+            up = round(tQPos)
+            thirdQ = self.data[up - 1] + (3 * (self.data[up - 1] - self.data[up]) / 4.0)
         # Compute the IQR
         IQR = thirdQ - firstQ
         # Compute the number of classes and its length
-        self.numBins = 2 * IQR * m.pow(n, -1/3)
+        self.numBins = int(2 * IQR * m.pow(n, -1/3))
         self.binWidth = (self.data[-1] - self.data[0]) / self.numBins
         # Fill the frequencies array with zero
         for i in range(self.numBins):
@@ -73,26 +84,28 @@ class Histogram():
         """
         lower = 0
         upper = 0
-        x = data[0]
+        x = self.data[0]
         for i in range(1, self.numBins):
             lower = x
-            x = data[0] + i * self.binWidth
+            x = self.data[0] + i * self.binWidth
             upper = x
-            self.classesInterval.push([lower, upper])
+            self.classesInterval.append([lower, upper])
 
     def computeFreq(self):
         """
         Compute the frequencies of the histogram and its maximum and minimum
         """
         for x in self.data:
+            i = 0
             for interval in self.classesInterval:
                 if interval[0] <= x <= interval[1]:
                     self.frequencies[i] += 1
                     break
+                i += 1
 
-        self.minFreq = frequencies[0]
-        self.maxFreq = frequencies[1]
-        for f in frequencies:
+        self.minFreq = self.frequencies[0]
+        self.maxFreq = self.frequencies[0]
+        for f in self.frequencies:
             if f < self.minFreq:
                 self.minFreq = f
             elif f > self.maxFreq:
