@@ -18,6 +18,6 @@ from django.urls import include, path
 
 urlpatterns = [
     # Add the urls from the visAnalytics app
-    path('visAnalytics', include('visAnalytics.urls')),
+    path('visAnalytics/', include('visAnalytics.urls')),
     path('admin/', admin.site.urls),
 ]
