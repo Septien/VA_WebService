@@ -57,7 +57,7 @@ class Histogram():
         tQPos = ( (3 * (n - 1)) / 4 ) + 1
         # Get the quartile
         firstQ = data[fQPos]
-        thirdQ 0 data[tQPos]
+        thirdQ = data[tQPos]
         # Compute the IQR
         IQR = thirdQ - firstQ
         # Compute the number of classes and its length
