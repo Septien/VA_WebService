@@ -73,6 +73,14 @@ class Histogram():
         IQR = thirdQ - firstQ
         # Compute the number of classes and its length
         self.numBins = int(2 * IQR * m.pow(n, -1/3))
+        self.computeBinWidth()
+
+
+    def computeBinWidth(self):
+        """
+        Computes the width of each class based on the number of bins. It also fills
+        the of frequencies with zeros, based on the number of classes.
+        """
         self.binWidth = (self.data[-1] - self.data[0]) / self.numBins
         # Fill the frequencies array with zero
         for i in range(self.numBins):
@@ -111,13 +119,21 @@ class Histogram():
             elif f > self.maxFreq:
                 self.maxFreq = f
 
-    def computeHistogram(self):
+    def computeHistogram(self, bins=0):
         """
+        Compute the hisotogram of the axis. If the bins variable is zero, 
+        compute the number of classes using the mentioned formula. Else, 
+        use the value of it.
         """
         if not self.data:
             return False
 
-        self.computeNumClass()
+        if bins != 0:
+            self.numBins = bins
+            self.computeBinWidth()
+        else:
+            self.computeNumClass()
+
         self.ComputeClassesIntervals()
         self.computeFreq()
 

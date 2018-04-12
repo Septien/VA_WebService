@@ -28,6 +28,7 @@ def HistogramHandler( request ):
     # Get all the data
     dbName = request.GET.get('db')
     axis = int(request.GET.get('axis'))
+    nbins = int(request.GET.get("bins"))
     needHtml = bool(request.GET.get('needhtml'))
 
     # Por el momento, supondremos que la base de datos es un archivo
@@ -35,7 +36,7 @@ def HistogramHandler( request ):
     # Compute the histogram
     hist = histogram.Histogram()
     hist.loadDataFromFile(dbName, axis)
-    hist.computeHistogram()
+    hist.computeHistogram(nbins)
     # Get the corresponding data
     frequencies = hist.getFrequencies()
     xAxisRange = hist.getXAxisRange()
