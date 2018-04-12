@@ -21,7 +21,7 @@ function Histogram() {
         this.database = database;
         this.selector = selector;
         this.initCanvas();
-        this.sendRequest()
+        this.sendRequest(0, 0, 0)
         this.addToDOM();
         this.Draw();
         this.bindEvents();
@@ -33,10 +33,10 @@ function Histogram() {
         -axis: number indicating the axis number to be analysed. */
     this.sendRequest = function( axis, needHtml, bins ) {
         var requestData = {
-            db: this.database,
-            axis: axis,
-            nbins: bins,
-            needHtml: needHtml
+            "db": this.database,
+            "axis": axis,
+            "bins": bins,
+            "needhtml": needHtml
         };
 
         $.ajax({
