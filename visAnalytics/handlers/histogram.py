@@ -93,16 +93,19 @@ class Histogram():
         lower = 0
         upper = 0
         x = self.data[0]
-        for i in range(1, self.numBins):
+        for i in range(self.numBins):
             lower = x
-            x = self.data[0] + i * self.binWidth
+            x = self.data[0] + (i + 1) * self.binWidth
             upper = x
-            self.classesInterval.append([lower, upper])
+            interval = [lower, upper]
+            self.classesInterval.append(interval.copy())
+
 
     def computeFreq(self):
         """
         Compute the frequencies of the histogram and its maximum and minimum
         """
+        print(self.classesInterval)
         for x in self.data:
             i = 0
             for interval in self.classesInterval:
