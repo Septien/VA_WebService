@@ -1,9 +1,16 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.template.loader import render_to_string
-#import handlers.histogram as h
-#from visAnalytics import handlers as h
 from visAnalytics.handlers import histogram
+from django.conf import settings
+
+def index( request ):
+    """
+    It is call when the client connects for the first time. Fullfils the template file
+    with all the corresponding urls and data, and returns it.
+    """
+    print(settings.STATIC_URL)
+    return render(request, 'base_template.html')
 
 # Create your views here.
 def HistogramHandler( request ):
