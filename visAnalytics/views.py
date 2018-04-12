@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.template.loader import render_to_string
-from handlers import histogram as h
+#import handlers.histogram as h
+#from visAnalytics import handlers as h
+from visAnalytics.handlers import histogram
 
 # Create your views here.
 def HistogramHandler( request ):
@@ -22,16 +24,17 @@ def HistogramHandler( request ):
         -Default number of classes (bins).
         -Width of each class.
     """
+    #https://stackoverflow.com/questions/3711349/django-and-query-string-parameters
     # Get all the data
     dbName = request.GET.get('db')
     axis = int(request.GET.get('axis'))
     needHtml = bool(request.GET.get('needhtml'))
 
     # Por el momento, supondremos que la base de datos es un archivo
-
+    
     # Compute the histogram
-    hist = h.Histograma()
-    hist.loadDataFromFile(dbName)
+    hist = histogram.Histogram()
+    hist.loadDataFromFile(dbName, axis)
     hist.computeHistogram()
     # Get the corresponding data
     frequencies = hist.getFrequencies()
@@ -41,24 +44,24 @@ def HistogramHandler( request ):
 
     template = ""
     histogramid = "histogramplot" + str(axis)
-    if needhtml:
+    if needHtml:
         context = {
-            histogramid: histogramid,
-            minB: 1,
-            maxB: n,
-            numbins: numBins
+            "histogramid": histogramid,
+            "minB": 1,
+            "maxB": n,
+            "numbins": numBins
         }
         template = render_to_string("histogramTemplate.html", context)
-    
+
     json = {
-        html: template,
-        xRange: xAxisRange,
-        minF: minFreq,
-        maxF: maxFreq,
-        freqs: frequencies,
-        binWidth: binWidth,
-        numbins: numBins,
-        histogramid: histogramid
+        "html": template,
+        "xRange": xAxisRange,
+        "minF": minFreq,
+        "maxF": maxFreq,
+        "freqs": frequencies,
+        "binWidth": binWidth,
+        "numbins": numBins,
+        "histogramid": histogramid
     }
 
     return JsonResponse(json)
