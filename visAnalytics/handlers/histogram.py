@@ -105,7 +105,6 @@ class Histogram():
         """
         Compute the frequencies of the histogram and its maximum and minimum
         """
-        print(self.classesInterval)
         for x in self.data:
             i = 0
             for interval in self.classesInterval:
