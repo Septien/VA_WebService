@@ -29,7 +29,7 @@ def HistogramHandler( request ):
     dbName = request.GET.get('db')
     axis = int(request.GET.get('axis'))
     nbins = int(request.GET.get("bins"))
-    needHtml = bool(request.GET.get('needhtml'))
+    needHtml = bool(int(request.GET.get('needhtml')))
 
     # Por el momento, supondremos que la base de datos es un archivo
     
