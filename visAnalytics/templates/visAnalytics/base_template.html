@@ -6,7 +6,8 @@
     <meta name="author" content="José Septién @ LaViRIA">
 
     <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="style.css">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% 'visAnalytics/style.css' %}">
 </head>
 <body>
     <header class="va">
@@ -21,7 +22,7 @@
             </abbr>
             <select class="selecting" name="databases-list" id="databases" autofocus="autofocus">
                 <option value="none" selected="selected">&nbsp;</option>
-                <option value="heartdis">Heart Desease</option>
+                <option value="processed.cleveland">Heart Desease</option>
                 <!-- Fill fields on the server -->
             </select>
 
@@ -65,9 +66,10 @@
     </form>
 
     <!-- Scripts -->
-    <script type="text/javascript" src="three.min.js"></script>
-    <script type="text/javascript" src="jquery.js"></script>
-    <script type="text/javascript" src="jsPlots/histogram.js"></script>
-    <script type="text/javascript" src="script.js"></script>
+    {% load static %}
+    <script type="text/javascript" src="{% 'visAnalytics/three.min.js' %}"></script>
+    <script type="text/javascript" src="{% 'visAnalytics/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% 'visAnalytics/jsPlots/histogram.js' %}"></script>
+    <script type="text/javascript" src="{% 'visAnalytics/script.js' %}"></script>
 </body>
 </html>
