@@ -33,8 +33,10 @@ function Histogram() {
     /* Function to send the request to the server. 
         -needHtml: boolean that indicates if the html for the 
         graph is necessary.
-        -axis: number indicating the axis number to be analysed. */
-    this.sendRequest = function( axis, needHtml, bins ) {
+        -axis: number indicating the axis number to be analysed. 
+        -bins: Number of bins requested to the server, if zero, the server 
+            calculates them with the default formula. */
+    this.getData = function( axis, needHtml, bins ) {
         var requestData = {
             "db": this.database,
             "axis": axis,
@@ -42,34 +44,45 @@ function Histogram() {
             "needhtml": needHtml
         };
 
+        var bins = 0;
+        var freqs = [];
+        var minf = 0;
+        var maxf = 0;
+        var selector = "";
+        var xRange = [];
+        var html = "";
+
+        // https://javascriptplayground.com/javascript-variable-scope-this/
         $.ajax({
             url: "http://127.0.0.1:8000/visAnalytics/histogram",
             data: requestData,
             dataType: "json",
-            context: this
+            async: false,
         }).done( function( data ) {
-            // Retrieve the recieved data
-            alert(data);
+            // Retrieve the recieved data and pass it to the calling class.
+            // Set the number of classes
+            bins = data.numbins;
+            // Set the frequencies
+            freqs = data.freqs.slice(0);
+            // Set the min and max frequency
+            minf = data.minF;
+            maxf = data.maxF;
+            // Set the selector
+            selector = data.histogramid;
+            // Set the x range
+            xRange = data.xRange;
+            // Add to DOM the html
+            if ( data.html ) {
+                html = data.html;
+            }
         });
-    };
 
-    /* Initialize the scene and renderer object. */
-    this.initCanvas = function() {
-        var canvasWidth, canvasHeight, canvasRatio;
-
-        // Default width and height
-        canvasWidth = 100;
-        canvasHeight = 100;
-        canvasRatio = canvasWidth / canvasHeight;
-
-        var backgroundColor = new THREE.Color( 0.9, 0.9, 0.9 );
-        // The scene
-        this.scene.background = backgroundColor;    // Set a light gray as the background
-
-        // Set default renderer configuration
-        this.renderer.setClearColor( backgroundColor, 1 );
-        this.renderer.autoClear = false;
-        this.renderer.setSize( canvasWidth, canvasHeight );
+        this.setNumBins( bins );
+        this.setMinMaxFreqs( minf, maxf );
+        this.setFrequencies( freqs );
+        this.setIdSelector( selector );
+        this.setXRange( xRange );
+        this.addToDOM( html );
     };
 
     // Adds the HTML base code for drawing the histogram
