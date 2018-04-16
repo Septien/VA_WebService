@@ -6,6 +6,7 @@ function Histogram() {
     this.scene = new THREE.Scene();
     this.camera = new THREE.OrthographicCamera( -0.1, 1.1, 1.1, -0.1, -0.1, 1.0 );
     this.renderer = new THREE.WebGLRenderer( { antialiase: false, preserveDrawingBuffer: false } );
+    this.graphName = 'histogram';
     this.numBins = 5;
     this.maxBins = 10;
     this.rectWidth = 1.0 / this.numBins;
@@ -250,5 +251,10 @@ function Histogram() {
             // Add to the scene.
             this.scene.add( rectangle );
         }
+    };
+
+    /* Returns the name of the graph. */
+    this.getGraphName = function() {
+        return this.graphName;
     };
 };
