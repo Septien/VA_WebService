@@ -149,14 +149,21 @@ function Histogram() {
 
     /* Bind event handlers to the widgets on histogram */
     this.bindEvents = function() {
-        // Get the DOM element
+        // Get the number of bins element ("Numbers")
         var binsSelector = $( this.selector + " #nums" );
         if ( binsSelector.length < 1 ) {
             return;
         }
+        // Get the element for "fit distribution"
+        var fitDis = $( this.selector + " #prob-dist" );
+        if ( fitDis < 1 ) {
+            return;
+        }
 
-        // Attach event
+        // Attach event to the selection of number of bins
         binsSelector.on( "change", { hist: this }, this.onBinsChanged );
+        // Attach event to the "fit-dist" select
+        fitDis.on( "change", { hist: this }, this.onPDSelected );
     };
 
     /* Handle the change of number of bins */
@@ -169,6 +176,24 @@ function Histogram() {
         hist.getData( 0, 0, numBins );
         // Redraw
         hist.Draw();
+    };
+
+    /* Paints the selected probability distribution */
+    this.onPDSelected = function( event ) {
+        // Get the histogram class
+        var hist = event.data.hist;
+        // Get the selected pd
+        var pd = $( this ).val();
+
+        switch (pd) {
+            case "uniform":
+                hist.Draw( 1 );
+                break;
+            case "gaussian":
+                break;
+            default:
+                break;
+        }
     };
 
     /* Set the number of bins in the histogram */
@@ -200,14 +225,26 @@ function Histogram() {
         }
     };
 
-    this.Draw = function() {
+    this.Draw = function( graph = 0 ) {
         // Clear scene
         // https://stackoverflow.com/questions/30359830/how-do-i-clear-three-js-scene
         // https://github.com/mrdoob/three.js/issues/5175
         this.scene.remove.apply( this.scene, this.scene.children );
         // Draw
         this.DrawRects();
-        this.DrawAxes(); 
+        this.DrawAxes();
+        // Draw pd
+        switch( graph ) {
+            // Uniform
+            case 1:
+                this.drawUniformPD();
+                break;
+            // Gaussian
+            case 2:
+                break;
+            default:
+                break;
+        }
 
         this.renderer.clear();
         this.renderer.render( this.scene, this.camera );
@@ -233,6 +270,18 @@ function Histogram() {
 
         this.scene.add( xAxis );
         this.scene.add( yAxis );
+    };
+
+    this.drawUniformPD = function() {
+        var material = new THREE.LineBasicMaterial( { color: 0x0000FF, linewidth: 2 } );
+        var geometry = new THREE.Geometry();
+        var uniform;
+
+        geometry.vertices.push( new THREE.Vector3( 0.0, 0.5, 0 ) );
+        geometry.vertices.push( new THREE.Vector3( 1, 0.5, 0 ) );
+        uniform = new THREE.Line( geometry, material );
+
+        this.scene.add( uniform );
     };
 
     this.DrawRects = function() {
