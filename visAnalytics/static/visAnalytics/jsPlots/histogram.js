@@ -18,12 +18,12 @@ function Histogram() {
 
     /* Initialize the object.
         -database: The database with which the user is working with.
-        -selector: The of the id of the container of the histogram
+        -axis: Axis on which the analysis is to be done.
      */
-    this.init = function( database ) {
+    this.init = function( database, axis ) {
         this.database = database;
         this.initCanvas();
-        this.sendRequest(0, 0, 0)
+        this.sendRequest( axis, 0, 0 );
         this.addToDOM();
         this.Draw();
         this.bindEvents();
