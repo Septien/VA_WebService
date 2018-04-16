@@ -31,7 +31,7 @@ h1 {
     height: 25px;
 }
 
-/* For the area containing all the graphs */
+/* For the area (main body) containing all the graphs */
 .plots {
     overflow: auto;
     align-content: center;
@@ -39,7 +39,7 @@ h1 {
     padding: 0.5%;
 }
 
-/* For the rectangle containing the graphs */
+/* For the rectangle (<fieldset>) containing the graphs */
 .graph {
     background-color: lightblue;
     padding: 3%;
