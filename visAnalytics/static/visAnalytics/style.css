@@ -50,6 +50,13 @@ h1 {
 
 }
 
+.graph:before {
+    content: "\00d7";
+    position: relative;
+    top: -15%;
+    right: -55%;
+}
+
 /* Style the label of the graphs */
 .graphLabel {
     color: rgb(0, 0, 230);
