@@ -24,7 +24,7 @@ function Histogram() {
         var bins = 0, needhtml = 1;
         this.setDataBase( database );
         this.initCanvas();
-        this.sendRequest( axis, needhtml, bins );
+        this.getData( axis, needhtml, bins );
         this.Draw();
         this.bindEvents();
     };
@@ -53,7 +53,8 @@ function Histogram() {
         graph is necessary.
         -axis: number indicating the axis number to be analysed. 
         -bins: Number of bins requested to the server, if zero, the server 
-            calculates them with the default formula. */
+            calculates them with the default formula.
+        -needHtml: 1 if the html is needed, 0 otherwise. */
     this.getData = function( axis, needHtml, bins ) {
         var requestData = {
             "db": this.database,
