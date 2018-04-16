@@ -21,8 +21,8 @@ function Histogram() {
         -axis: Axis on which the analysis is to be done.
      */
     this.init = function( database, axis ) {
-        this.database = database;
         var bins = 0, needhtml = 1;
+        this.setDataBase( database );
         this.initCanvas();
         this.sendRequest( axis, needhtml, bins );
         this.addToDOM();
