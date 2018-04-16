@@ -104,6 +104,11 @@ function Histogram() {
         this.addToDOM( html );
     };
 
+    /* Set the interval of the x axis. */
+    this.setXRange = function( xRange ) {
+        this.xRange = xRange.slice(0);
+    }
+
     /* Set the selector with which the added element will be found on the DOM. e.g. "histogramplot0" */
     this.setIdSelector = function( selector ) {
         this.selector = "#" + selector;
