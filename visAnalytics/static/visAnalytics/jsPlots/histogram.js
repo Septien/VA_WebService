@@ -244,6 +244,9 @@ function Histogram() {
         var lineMaterial = new THREE.LineBasicMaterial( { color: 0xFFFF00, linewidth: 1} );
         // Draw the rectangles and lines
         for (var i = 0; i < this.numBins; i++) {
+            if ( this.frequencies[i]  === 0) {
+                continue;
+            }
             // The rectangle
             var rectMaterial = new THREE.MeshBasicMaterial( { color: Math.random() * 0xFFFFFF } );
             var rectGeometry = new THREE.BoxGeometry( this.rectWidth, this.frequencies[i], 0.1);
