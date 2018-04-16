@@ -25,7 +25,6 @@ function Histogram() {
         this.setDataBase( database );
         this.initCanvas();
         this.sendRequest( axis, needhtml, bins );
-        this.addToDOM();
         this.Draw();
         this.bindEvents();
     };
@@ -160,9 +159,16 @@ function Histogram() {
         this.database = database;
     }
 
-    /* Sends the request to the server for updating the frequencies */
-    this.setFrequencies = function() {
-        /* Send request */
+    /* Copy the freqs array in to the frequencies array. Then normalizes it using the maximum frequency */
+    this.setFrequencies = function( freqs ) {
+        // Clear any previous content
+        this.frequencies.length = 0;
+        // Copy the content
+        this.frequencies = freqs.slice( 0 );
+        // Normalize
+        for (var i = 0; i < this.frequencies.length; i++) {
+            this.frequencies[i] = this.frequencies[i] / this.maxFreq;
+        }
     };
 
     this.Draw = function() {
