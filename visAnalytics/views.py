@@ -69,7 +69,8 @@ def HistogramHandler( request ):
         "freqs": frequencies,
         "binWidth": binWidth,
         "numbins": numBins,
-        "histogramid": histogramid
+        "histogramid": histogramid,
+        "maxBins": n
     }
 
     return JsonResponse(json)
