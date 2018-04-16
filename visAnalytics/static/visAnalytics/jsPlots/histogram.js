@@ -85,6 +85,11 @@ function Histogram() {
         this.addToDOM( html );
     };
 
+    /* Set the selector with which the added element will be found on the DOM. e.g. "histogramplot0" */
+    this.setIdSelector = function( selector ) {
+        this.selector = "#" + selector;
+    };
+
     /* Adds the HTML base code for drawing the histogram */
     this.addToDOM = function( html ) {
         var mainBody = $( "#main" );
