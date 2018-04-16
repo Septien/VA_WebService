@@ -10,6 +10,9 @@ function Histogram() {
     this.maxBins = 10;
     this.rectWidth = 1.0 / this.numBins;
     this.frequencies = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.1, 0.9];
+    this.minFreq = 0.1;
+    this.maxFreq = 0.9;
+    this.xRange = [0.0, 1.0];
     this.database = "";
     this.selector = "";
 
