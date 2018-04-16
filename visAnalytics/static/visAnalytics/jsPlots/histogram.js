@@ -22,8 +22,9 @@ function Histogram() {
      */
     this.init = function( database, axis ) {
         this.database = database;
+        var bins = 0, needhtml = 1;
         this.initCanvas();
-        this.sendRequest( axis, 0, 0 );
+        this.sendRequest( axis, needhtml, bins );
         this.addToDOM();
         this.Draw();
         this.bindEvents();
