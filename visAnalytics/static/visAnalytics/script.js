@@ -32,47 +32,30 @@ function addGraph( event ) {
     // Do not propagete the event upwards
     event.stopPropagation();
 
-    // Get url for the graph
-    /*url = "/va/" + graph;*/
-    mainBody = $( "#main" );
+    // Process the selected graph
+    var removed = false;
     switch ( graph ) {
-        case 'histogram':
-            var selector = "#histogramplot";
-            var plot = $( selector );
-            if ( plot.length > 0 ) {
-                plot.remove();
+        case 'histogram':;
+            for (var i = 0; i < graphs.length; i++) {
+                g = graphs[i];
+                console.log(g);
+                if ( g.getGraphName() === 'histogram' ) {
+                    if ( g.removeFromDOM() ) {
+                        removed = true;
+                    }
+                }
+            }
+            if ( removed ) {
                 break;
             }
             g = new Histogram();
-            g.init( "", selector);
+            g.init( "processed.cleveland", 0 );
+            // Add to the array of charts.
+            graphs.push( g );
             break;
         default:
             break;
     }
-
-    /* Send the request*/
-    /*$.ajax({
-        url: url,
-        type: "GET",
-        data: {
-            graph: graph,
-            database: database,
-        },
-        dataType: "json",
-    })
-    .done( function( json ) {
-
-    })
-    .fail( function( xhr, status, errorThrown ) {
-        alert( "Graph could not be loaded." );
-        console.log( "Error: " + errorThrown );
-        console.log( "Status: " + status );
-        console.dir( xhr );
-
-    })
-    .always( function( xhr, status ) {
-
-    });*/
 };
 
 /* Function for the data mining drop down list */
