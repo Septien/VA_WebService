@@ -16,6 +16,7 @@ function Histogram() {
     this.xRange = [0.0, 1.0];
     this.database = "";
     this.selector = "";
+    this.pd = 0;
 
     /* Initialize the object.
         -database: The database with which the user is working with.
@@ -178,6 +179,11 @@ function Histogram() {
         hist.Draw();
     };
 
+    /* Set the pd to draw */
+    this.setPD = function( pd = 0 ) {
+        this.pd = pd;
+    };
+
     /* Paints the selected probability distribution */
     this.onPDSelected = function( event ) {
         // Get the histogram class
@@ -187,7 +193,8 @@ function Histogram() {
 
         switch (pd) {
             case "uniform":
-                hist.Draw( 1 );
+                hist.setPD( 1 );
+                hist.Draw();
                 break;
             case "gaussian":
                 break;
@@ -225,7 +232,7 @@ function Histogram() {
         }
     };
 
-    this.Draw = function( graph = 0 ) {
+    this.Draw = function() {
         // Clear scene
         // https://stackoverflow.com/questions/30359830/how-do-i-clear-three-js-scene
         // https://github.com/mrdoob/three.js/issues/5175
@@ -234,7 +241,7 @@ function Histogram() {
         this.DrawRects();
         this.DrawAxes();
         // Draw pd
-        switch( graph ) {
+        switch( this.pd ) {
             // Uniform
             case 1:
                 this.drawUniformPD();
@@ -278,7 +285,7 @@ function Histogram() {
         var uniform;
 
         geometry.vertices.push( new THREE.Vector3( 0.0, 0.5, 0 ) );
-        geometry.vertices.push( new THREE.Vector3( 1, 0.5, 0 ) );
+        geometry.vertices.push( new THREE.Vector3( 1.05, 0.5, 0 ) );
         uniform = new THREE.Line( geometry, material );
 
         this.scene.add( uniform );
