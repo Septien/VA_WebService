@@ -117,6 +117,9 @@ function Histogram() {
 
     /* Adds the HTML base code for drawing the histogram */
     this.addToDOM = function( html ) {
+        if ( html == "") {
+            return;
+        }
         var mainBody = $( "#main" );
 
         // Split the string. Get first the element <fieldset> without the gui controls
@@ -147,7 +150,7 @@ function Histogram() {
     /* Bind event handlers to the widgets on histogram */
     this.bindEvents = function() {
         // Get the DOM element
-        var binsSelector = $( "#histogramplot #nums" );
+        var binsSelector = $( this.selector + " #nums" );
         if ( binsSelector.length < 1 ) {
             return;
         }
@@ -160,10 +163,10 @@ function Histogram() {
     this.onBinsChanged = function( event ) {
         // Get the histogram class
         var hist = event.data.hist;
-        //  Update the number of bins
+        //  Get the number of bins
         var numBins = $( this ).val();
-        // Update bins and frequency
-        hist.setNumBins( numBins );
+        // Request data to server
+        hist.getData( 0, 0, numBins );
         // Redraw
         hist.Draw();
     };
@@ -261,7 +264,6 @@ function Histogram() {
     /* Remove the element from DOM, if exists. */
     this.removeFromDOM = function() {
         var plot = $( this.selector );
-        console.log(plot);
         if ( plot.length > 0) {
             plot.remove();
             return true;
