@@ -85,42 +85,33 @@ function Histogram() {
         this.addToDOM( html );
     };
 
-    // Adds the HTML base code for drawing the histogram
-    this.addToDOM = function() {
-
+    /* Adds the HTML base code for drawing the histogram */
+    this.addToDOM = function( html ) {
         var mainBody = $( "#main" );
 
-        var html = '<fieldset class="graph" name="hist" id="histogramplot">\
-                    <legend class="graphLabel">Histogram</legend>\
-                </fieldset>';
-        mainBody.append( html );
+        // Split the string. Get first the element <fieldset> without the gui controls
+        var closeTag = "</legend>";
+        var closeTagIndex = html.search( closeTag ) + closeTag.length;
+        var splitHtml = html.substring( 0, closeTagIndex );
+        closeTag = "</fieldset>";
+        splitHtml = splitHtml.concat( closeTag );
+
+        mainBody.append( splitHtml );
         // Get the container (aka fieldset) of the histogram. Supposed to be already inserted
         var container = $( this.selector );
         container.append( this.renderer.domElement );
 
-        html = '<div class="fit-distribution">\
-                    <label for="prob-dist"><abbr title="Fit one of the following probability distributions in the histogram. Draws it on the plot.">Fit</abbr>\
-                    probability distribution:</label>\
-                    <select class="distribution" name="distribution-prob" id="prob-dist">\
-                        <option value="none" selected="selected">&nbsp;</option>\
-                        <option value="uniform">Uniform distribution</option>\
-                        <option value="gaussian">Normal distribution</option>\
-                    </select>\
-                    <label for="nums">Number of bins:</label>\
-                    <input type="number" name="Numbers" id="nums" min="0" max="10" step="1" value="5">\
-                </div>';
-        container.append( html );
+        // Get the rest of the html
+        splitHtml = html.substring( closeTagIndex, html.search( closeTag ) );
+        container.append( splitHtml );
 
-        // Get the default number of bins
-        var element = $( this.selector + " #nums" );
-        var numBins = parseInt(element.attr( "value" ));
-        this.setNumBins( numBins, true );
-        
         // Change the size of the renderer based on the containing element size
         var canvas = $( this.selector );
         var width = canvas.width();
         var height = canvas.height();
-        this.renderer.setSize(width, 0.9 * height);
+        this.canvasHeight = 0.9 * height;
+        this.canvasWidth = width;
+        this.renderer.setSize( width, 0.9 * height );
     };
 
     /* Bind event handlers to the widgets on histogram */
