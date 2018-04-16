@@ -197,6 +197,8 @@ function Histogram() {
                 hist.Draw();
                 break;
             case "gaussian":
+                hist.setPD( 2 );
+                hist.Draw();
                 break;
             default:
                 break;
@@ -248,6 +250,7 @@ function Histogram() {
                 break;
             // Gaussian
             case 2:
+                this.drawGaussianPD();
                 break;
             default:
                 break;
@@ -291,6 +294,23 @@ function Histogram() {
         this.scene.add( uniform );
     };
 
+    this.drawGaussianPD = function() {
+        var material = new THREE.LineBasicMaterial( { color: 0x000000, linewidth: 2 } );
+        var points = [];
+        // Compute the points
+        var sigma = 0.2, mu = 0.5, y;
+        for ( var x = 0; x < 1.05; x += 0.01 ) {
+            y = ( 1.0 / Math.sqrt( 2.0 * Math.PI * sigma * sigma ) ) * Math.exp( - ( Math.pow(x - mu, 2) ) / ( 2 * sigma * sigma ) );
+            points.push( new THREE.Vector2( x, y - 0.05 ) );
+        }
+        // Get the shape
+        var shape = new THREE.Shape( points );
+        shape.autoclose = false;
+        var geometry = new THREE.Geometry().setFromPoints( points ); //shape.createPointsGeometry();
+        var line = new THREE.Line( geometry, material );
+        this.scene.add( line );
+    };
+
     this.DrawRects = function() {
         if ( this.frequencies.length < 1 ) {
             return;
@@ -301,7 +321,7 @@ function Histogram() {
         var lineMaterial = new THREE.LineBasicMaterial( { color: 0xFFFF00, linewidth: 1} );
         // Draw the rectangles and lines
         for (var i = 0; i < this.numBins; i++) {
-            if ( this.frequencies[i]  === 0) {
+            if ( this.frequencies[i] === 0) {
                 continue;
             }
             // The rectangle
