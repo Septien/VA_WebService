@@ -144,13 +144,9 @@ function Histogram() {
     };
 
     /* Set the number of bins in the histogram */
-    this.setNumBins = function( numBins, withFrequencies ) {
+    this.setNumBins = function( numBins ) {
         this.numBins = numBins;
         this.rectWidth = 1.0 / this.numBins;
-
-        if ( !withFrequencies ) {
-            this.setFrequencies();
-        }
     };
 
     /* Set the database to work with */
