@@ -257,4 +257,15 @@ function Histogram() {
     this.getGraphName = function() {
         return this.graphName;
     };
+
+    /* Remove the element from DOM, if exists. */
+    this.removeFromDOM = function() {
+        var plot = $( this.selector );
+        console.log(plot);
+        if ( plot.length > 0) {
+            plot.remove();
+            return true;
+        }
+        return false;
+    };
 };
