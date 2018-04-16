@@ -149,6 +149,12 @@ function Histogram() {
         this.rectWidth = 1.0 / this.numBins;
     };
 
+    /* Set the minimum and maximum of the frequencies */
+    this.setMinMaxFreqs = function( minF, maxF ) {
+        this.minFreq = minF;
+        this.maxFreq = maxF;
+    };
+
     /* Set the database to work with */
     this.setDataBase = function( database ) {
         this.database = database;
