@@ -29,6 +29,25 @@ function Histogram() {
         this.bindEvents();
     };
 
+    /* Initialize the scene and renderer object. */
+    this.initCanvas = function() {
+        var canvasWidth, canvasHeight, canvasRatio;
+
+        // Default width and height
+        canvasWidth = 100;
+        canvasHeight = 100;
+        canvasRatio = canvasWidth / canvasHeight;
+
+        var backgroundColor = new THREE.Color( 0.9, 0.9, 0.9 );
+        // The scene
+        this.scene.background = backgroundColor;    // Set a light gray as the background
+
+        // Set default renderer configuration
+        this.renderer.setClearColor( backgroundColor, 1 );
+        this.renderer.autoClear = false;
+        this.renderer.setSize( canvasWidth, canvasHeight );
+    };
+
     /* Function to send the request to the server. 
         -needHtml: boolean that indicates if the html for the 
         graph is necessary.
