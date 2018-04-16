@@ -240,7 +240,8 @@ function Histogram() {
             return;
         }
 
-        var initialX = this.rectWidth / 2.0;
+        var offset = 0.025;
+        var initialX = offset + this.rectWidth / 2.0;
         var lineMaterial = new THREE.LineBasicMaterial( { color: 0xFFFF00, linewidth: 1} );
         // Draw the rectangles and lines
         for (var i = 0; i < this.numBins; i++) {
