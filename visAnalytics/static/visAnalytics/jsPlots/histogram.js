@@ -20,9 +20,8 @@ function Histogram() {
         -database: The database with which the user is working with.
         -selector: The of the id of the container of the histogram
      */
-    this.init = function( database, selector ) {
+    this.init = function( database ) {
         this.database = database;
-        this.selector = selector;
         this.initCanvas();
         this.sendRequest(0, 0, 0)
         this.addToDOM();
