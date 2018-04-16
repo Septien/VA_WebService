@@ -303,7 +303,7 @@ function Histogram() {
             var rectangle = new THREE.Mesh( rectGeometry, rectMaterial );
             rectangle.position.x = initialX + (i * this.rectWidth);
             rectangle.position.y = this.frequencies[i] / 2.0;
-            rectangle.position.z = 0;
+            rectangle.position.z = -0.1;
             // Add to the scene.
             this.scene.add( rectangle );
         }
