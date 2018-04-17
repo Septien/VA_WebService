@@ -28,7 +28,7 @@ class Histogram():
 
     def loadDataFromFile(self, filename, axis=0):
         """
-        Loads the data and computes the range of the column
+        Loads the data and computes the range of the axis
         """
         # Load
         file = "/Users/Septien/Documents/Tesis/code/data/" + filename + ".data"
