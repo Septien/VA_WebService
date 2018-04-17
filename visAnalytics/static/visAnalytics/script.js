@@ -52,11 +52,6 @@ function addGraph( event ) {
     var removed = false;
     switch ( graph ) {
         case 'histogram':
-            var scriptName = "histogram.js";
-            var script = getScript( scriptName );
-            var plotMainScript = $( ".plotMainScript" );
-            console.log(script);
-            plotMainScript.prepend( script );
             g = new Histogram();
             g.init( "processed.cleveland", 0 );
             // Add to the array of charts.
