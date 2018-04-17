@@ -6,6 +6,8 @@ urlpatterns = [
     #https://stackoverflow.com/questions/3711349/django-and-query-string-parameters
     # The main entry point
     path('', views.index),
+    # For requesting a script
+    path('script', views.getScript),
     # For the histogram
     path(r"histogram", views.HistogramHandler),
 ]

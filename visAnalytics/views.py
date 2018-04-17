@@ -4,6 +4,8 @@ from django.template.loader import render_to_string
 from visAnalytics.handlers import histogram
 from django.conf import settings
 
+import os
+
 def index( request ):
     """
     It is call when the client connects for the first time. Fullfils the template file
@@ -12,7 +14,22 @@ def index( request ):
     print(settings.STATIC_URL)
     return render(request, 'base_template.html')
 
-# Create your views here.
+def getScript( request ):
+    """
+    The client send a request for the needed script (for the graphs).
+    This function opens it, and then send it back to the client.
+    """
+    # Get the script name
+    scriptName = request.GET.get('requestedScript')
+
+    context = {
+        "scriptName": scriptName
+    }
+    script = render_to_string("scriptTemplate.html", context)
+    
+    return JsonResponse( { "requestedScript": script } )
+
+
 def HistogramHandler( request ):
     """
     The histogram handler on the server. This handler will be in charge of calculating the
@@ -53,6 +70,7 @@ def HistogramHandler( request ):
     template = ""
     histogramid = "histogramplot" + str(axis)
     if needHtml:
+        # Process template
         context = {
             "histogramid": histogramid,
             "minB": 1,
