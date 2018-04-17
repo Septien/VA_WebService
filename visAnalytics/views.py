@@ -26,6 +26,7 @@ def getScript( request ):
         "scriptName": scriptName
     }
     script = render_to_string("scriptTemplate.html", context)
+    script = script.replace("\n", "")
     
     return JsonResponse( { "requestedScript": script } )
 
