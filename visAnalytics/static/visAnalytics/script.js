@@ -15,6 +15,22 @@ function addDatabase( event ) {
     event.stopPropagation();
 };
 
+/* Request the server the script to be added to the DOM*/
+function getScript( script ) {
+    // Script form the server
+    var scriptS = "";
+
+    $.ajax({
+        url: "http://127.0.0.1:8000/visAnalytics/script",
+        data: { requestedScript: script },
+        dataType: "json",
+        async: false
+    }).done( function( data ) {
+        scriptS = data.requestedScript;
+    });
+
+    return scriptS;
+}
 
 /*  Function for the graph dropdown list. Recieves the selected graph, and sends the request to the
     server, appends the corresponding element to the main part of the document, call the corresponding function for 
@@ -35,19 +51,12 @@ function addGraph( event ) {
     // Process the selected graph
     var removed = false;
     switch ( graph ) {
-        case 'histogram':;
-            for (var i = 0; i < graphs.length; i++) {
-                g = graphs[i];
-                console.log(g);
-                if ( g.getGraphName() === 'histogram' ) {
-                    if ( g.removeFromDOM() ) {
-                        removed = true;
-                    }
-                }
-            }
-            if ( removed ) {
-                break;
-            }
+        case 'histogram':
+            var scriptName = "histogram.js";
+            var script = getScript( scriptName );
+            var plotMainScript = $( ".plotMainScript" );
+            console.log(script);
+            plotMainScript.prepend( script );
             g = new Histogram();
             g.init( "processed.cleveland", 0 );
             // Add to the array of charts.
