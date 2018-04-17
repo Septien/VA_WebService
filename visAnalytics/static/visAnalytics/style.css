@@ -44,7 +44,8 @@ h1 {
     background-color: lightblue;
     padding: 3%;
     width: 43%;
-    height: 400px;
+    /* https://stackoverflow.com/questions/1575141/how-to-make-a-div-100-height-of-the-browser-window */
+    height: 50vh;
     font-family: sans-serif;
     float: left;
 
@@ -54,12 +55,12 @@ h1 {
     width: 93%
 }
 
-.graph:before {
+/*.graph:before {
     content: "\00d7";
     position: relative;
     top: -15%;
     right: -52%;
-}
+}*/
 
 /* Style the label of the graphs */
 .graphLabel {
