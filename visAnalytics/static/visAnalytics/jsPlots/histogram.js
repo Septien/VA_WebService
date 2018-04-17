@@ -2,7 +2,20 @@
 the user as well as from the server.*/
 
 function Histogram() {
-    // Necesary for using the three.js
+    /* Object for the histogram. Data members:
+        -scene, camera, renderer: For drawing on canvas.
+        -graphName: name of the graph.
+        -numBins: Number of classes on the histogram.
+        -maxBins: Maximum number of classes on the histogram.
+        -rectWidth: widht of the rectangle, based on the number of graphs.
+        -frequencies: Array containing all the frequencies from the server.
+        -minFreq: the minimum of the frequencies.
+        -maxFreq: the maximum of the frequencies.
+        -xRange: The range of the x axis.
+        -database: Name of the database to analyse.
+        -selector: id of the element on the DOM.
+        -pd: Selected probability distribution.
+    */
     this.scene = new THREE.Scene();
     this.camera = new THREE.OrthographicCamera( -0.1, 1.1, 1.1, -0.1, -0.1, 1.0 );
     this.renderer = new THREE.WebGLRenderer( { antialiase: false, preserveDrawingBuffer: false } );
