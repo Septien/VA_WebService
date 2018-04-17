@@ -50,11 +50,15 @@ h1 {
 
 }
 
+#parCoord {
+    width: 93%
+}
+
 .graph:before {
     content: "\00d7";
     position: relative;
     top: -15%;
-    right: -55%;
+    right: -52%;
 }
 
 /* Style the label of the graphs */
