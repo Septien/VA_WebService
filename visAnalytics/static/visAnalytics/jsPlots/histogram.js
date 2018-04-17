@@ -201,6 +201,9 @@ function Histogram() {
                 hist.Draw();
                 break;
             default:
+                // No pd to draw
+                hist.setPD( 0 );
+                hist.Draw();
                 break;
         }
     };
