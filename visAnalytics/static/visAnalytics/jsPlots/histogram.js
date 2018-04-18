@@ -183,7 +183,7 @@ function Histogram() {
         this.canvasWidth = width;
         this.renderer.setSize( width, 0.9 * height );
 
-        // The the value of the selected axis
+        // Set the value of the selected axis
         $( this.selector + " #axes" ).val( this.axis + 1 );
     };
 
