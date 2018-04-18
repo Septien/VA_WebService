@@ -51,8 +51,9 @@ h1 {
 
 }
 
-#parCoord {
-    width: 93%
+/* Set the parallel coordinates width, to use all the horizontal space. */
+fieldset[name=pCoord] {
+    width: 93%;
 }
 
 /*.graph:before {

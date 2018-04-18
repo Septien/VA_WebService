@@ -57,6 +57,11 @@ function addGraph( event ) {
             // Add to the array of charts.
             graphs.push( g );
             break;
+        case "pCoord":
+            var pc = new ParallelCoordinates();
+            pc.init( "processed.cleveland" );
+            graphs.push( pc );
+            break;
         default:
             break;
     }

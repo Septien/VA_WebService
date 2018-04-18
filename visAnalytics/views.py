@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.template.loader import render_to_string
-from visAnalytics.handlers import histogram
+from visAnalytics.handlers import histogram, parallelcoordinates
 from django.conf import settings
 
 import os
@@ -90,6 +90,52 @@ def HistogramHandler( request ):
         "numbins": numBins,
         "histogramid": histogramid,
         "maxBins": n
+    }
+
+    return JsonResponse(json)
+
+def parallelCoordinatesHandler( request ):
+    """
+    Handler for the parallel coordinates graph on the server. This handler calls the methods from 
+    the class "parallelCoordinates", for the computation of all necessary data.
+    The necessary parameters are recieved via the query string. Parameters are:
+        -db: Name of the database.
+        -coor: Coordinates to analyse.
+        -needhtml: If the html is needed.
+    The returned data is as follows:
+        -html: The html code if needed.
+        -data: The coordinates data.
+        -numAxes: The dimension of the data.
+        -ranges: The range of each axis.
+        -labels: The name of each axis.
+        -pCoordId: The id of the graph
+    """
+    # Get data from the query string
+    dbName = request.GET.get('db')
+    coord = request.GET.get('coor')
+    needhtml = bool(int(request.GET.get('needhtml')))
+
+    # Get ||-coord data
+    pCoord = parallelcoordinates.ParallelCoordinates()
+    pCoord.loadDataFromFile(dbName)
+
+    data = pCoord.getData()
+    ranges = pCoord.getRanges()
+    labels = pCoord.getLabels()
+    numAxes = pCoord.getNumberOfAxes()
+
+    template = ""
+    pCoordId = "parallelcoordinates1"
+    if needhtml:
+        template = render_to_string("pCoordinatesTemplate.html", context={ "plotid": pCoordId })
+
+    json = {
+        "html": template,
+        "data": data,
+        "ranges": ranges,
+        "numAxes": numAxes,
+        "pCoordId": pCoordId,
+        "labels": labels
     }
 
     return JsonResponse(json)
