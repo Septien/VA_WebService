@@ -5,6 +5,7 @@ function Histogram() {
     /* Object for the histogram. Data members:
         -scene, camera, renderer: For drawing on canvas.
         -graphName: name of the graph.
+        -defaultNumBins: The default number of bins, as calculated by the server.
         -numBins: Number of classes on the histogram.
         -maxBins: Maximum number of classes on the histogram.
         -rectWidth: widht of the rectangle, based on the number of graphs.
@@ -21,6 +22,7 @@ function Histogram() {
     this.camera = new THREE.OrthographicCamera( -0.1, 1.1, 1.1, -0.1, -0.1, 1.0 );
     this.renderer = new THREE.WebGLRenderer( { antialiase: false, preserveDrawingBuffer: false } );
     this.graphName = 'histogram';
+    this.defaultNumBins = 5;
     this.numBins = 5;
     this.maxBins = 10;
     this.rectWidth = 1.0 / this.numBins;
@@ -82,6 +84,7 @@ function Histogram() {
         };
 
         var bins = 0;
+        var defaultbins = this.defaultNumBins;
         var freqs = [];
         var minf = 0;
         var maxf = 0;
@@ -111,10 +114,12 @@ function Histogram() {
             // Add to DOM the html
             if ( data.html ) {
                 html = data.html;
+                defaultbins = data.numbins;
             }
         });
 
         this.setNumBins( bins );
+        this.setDefaultNumBins( defaultbins );
         this.setMinMaxFreqs( minf, maxf );
         this.setFrequencies( freqs );
         this.setIdSelector( selector );
@@ -140,6 +145,11 @@ function Histogram() {
     /* Set the selector with which the added element will be found on the DOM. e.g. "histogramplot0" */
     this.setIdSelector = function( selector ) {
         this.selector = "#" + selector;
+    };
+
+    /* Get the selector */
+    this.getIdSelector = function() {
+        return this.selector;
     };
 
     /* Adds the HTML base code for drawing the histogram */
@@ -186,11 +196,15 @@ function Histogram() {
         if ( fitDis < 1 ) {
             return;
         }
+        // Get the reset button
+        var resetBt = $( this.selector + " #reset" );
 
         // Attach event to the selection of number of bins
         binsSelector.on( "change", { hist: this }, this.onBinsChanged );
         // Attach event to the "fit-dist" select
         fitDis.on( "change", { hist: this }, this.onPDSelected );
+        // Attach event to reset button
+        resetBt.on( "click", { hist: this }, this.onResetBtClick );
     };
 
     /* Handle the change of number of bins */
@@ -234,10 +248,31 @@ function Histogram() {
         }
     };
 
+    this.onResetBtClick = function( event ) {
+        // Get the histogram
+        var hist = event.data.hist;
+        var bins = hist.getDefaultNumBins();
+        // Get the data with the default number of bins
+        hist.getData( 0, bins );
+        // Set the number of bins
+        $( hist.getIdSelector() + " #nums" ).val( bins );
+        hist.Draw();
+    };
+
     /* Set the number of bins in the histogram */
     this.setNumBins = function( numBins ) {
         this.numBins = numBins;
         this.rectWidth = 1.0 / this.numBins;
+    };
+
+    /* Set the default number of bins */
+    this.setDefaultNumBins = function ( defaultbins ) {
+        this.defaultNumBins = defaultbins;
+    };
+
+    /* Get the default number of bins */
+    this.getDefaultNumBins = function() {
+        return this.defaultNumBins;
     };
 
     /* Set the minimum and maximum of the frequencies */
