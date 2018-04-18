@@ -12,5 +12,12 @@
         <label for="nums">Number of bins:</label>
         <input type="number" name="Numbers" id="nums" min="{{ minB }}" max="{{ maxB }}" step="1" value="{{ numbins }}">
         <input type="button" name="reset" id="reset" value="Reset">
+        <label for="axes">Select axis</label>
+        <select class="selecting" name="axes" id="axes">
+            <option value="default" selected="selected">&nbsp;</option>
+            {% for axis in axes %}
+            <option value="{{ axis.value }}">{{ axis.name }}</option>
+            {% endfor %}
+        </select>
     </div>
 </fieldset>

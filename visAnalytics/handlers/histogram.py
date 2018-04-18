@@ -15,6 +15,7 @@ class Histogram():
         -xAxisRange: The interval of the x axis.
         -binWdith: The width of each class.
         -numBins: The number of classes.
+        -numAxes: Number of dimensions of the class.
     """
     def __init__(self):
         self.data = []
@@ -25,6 +26,7 @@ class Histogram():
         self.xAxisRange = []
         self.binWidth = 0
         self.numBins = 0
+        self.numAxes = 0
 
     def loadDataFromFile(self, filename, axis=0):
         """
@@ -35,6 +37,7 @@ class Histogram():
         with open(file) as dataFile:
             for line in dataFile:
                 row = line.split(",")
+                self.numAxes = len(row)
                 d = row[axis]
                 if (d != '?'):
                     self.data.append(float(d))
@@ -161,3 +164,8 @@ class Histogram():
         """
         return len(self.data)
 
+    def getNumberOfAxes(self):
+        """
+        Returns the number of axes on the database
+        """
+        return self.numAxes

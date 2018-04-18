@@ -67,16 +67,22 @@ def HistogramHandler( request ):
     xAxisRange = hist.getXAxisRange()
     (numBins, binWidth, minFreq, maxFreq) = hist.getHistogramData()
     n = hist.getNumData()
+    numAxes = hist.getNumberOfAxes()
 
     template = ""
     histogramid = "histogramplot" + str(axis)
     if needHtml:
+        axes = []
+        for i in range(numAxes):
+            axis = { "value": str(i + 1), "name": i + 1 }
+            axes.append(axis)
         # Process template
         context = {
             "histogramid": histogramid,
             "minB": 1,
             "maxB": n,
-            "numbins": numBins
+            "numbins": numBins,
+            "axes": axes
         }
         template = render_to_string("histogramTemplate.html", context)
 

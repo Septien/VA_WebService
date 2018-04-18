@@ -182,6 +182,9 @@ function Histogram() {
         this.canvasHeight = 0.9 * height;
         this.canvasWidth = width;
         this.renderer.setSize( width, 0.9 * height );
+
+        // The the value of the selected axis
+        $( this.selector + " #axes" ).val( this.axis + 1 );
     };
 
     /* Bind event handlers to the widgets on histogram */
@@ -193,11 +196,19 @@ function Histogram() {
         }
         // Get the element for "fit distribution"
         var fitDis = $( this.selector + " #prob-dist" );
-        if ( fitDis < 1 ) {
+        if ( fitDis.length < 1 ) {
             return;
         }
         // Get the reset button
         var resetBt = $( this.selector + " #reset" );
+        if ( resetBt.length < 1 ) {
+            return;
+        }
+        // Get the select for the number of axis
+        var numAxis = $( this.selector + " #axes");
+        if ( numAxis.length < 1 ) {
+            return;
+        }
 
         // Attach event to the selection of number of bins
         binsSelector.on( "change", { hist: this }, this.onBinsChanged );
@@ -205,6 +216,8 @@ function Histogram() {
         fitDis.on( "change", { hist: this }, this.onPDSelected );
         // Attach event to reset button
         resetBt.on( "click", { hist: this }, this.onResetBtClick );
+        // Attach event to select of the axis
+        numAxis.on( "change", { hist: this }, this.onAxisNumberChange );
     };
 
     /* Handle the change of number of bins */
@@ -259,10 +272,30 @@ function Histogram() {
         hist.Draw();
     };
 
+    /* When the number of the axis is changed */
+    this.onAxisNumberChange = function( event ) {
+        var needhtml = 0, numbins = 0;
+        // Get the histogram
+        var hist = event.data.hist;
+        // Get the number of axis selected
+        var axis = $( this ).val();
+        // Set it
+        hist.setAxis( axis - 1 );
+        // Get the data
+        hist.getData( needhtml, numbins );
+        hist.Draw();
+        $( this.selector + " #axes" ).val( axis );
+    };
+
     /* Set the number of bins in the histogram */
     this.setNumBins = function( numBins ) {
         this.numBins = numBins;
         this.rectWidth = 1.0 / this.numBins;
+    };
+
+    /* Get the number of bins */
+    this.getNumBins = function() {
+        return this.numBins;
     };
 
     /* Set the default number of bins */
