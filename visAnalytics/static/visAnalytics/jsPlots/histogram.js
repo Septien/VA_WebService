@@ -15,6 +15,7 @@ function Histogram() {
         -database: Name of the database to analyse.
         -selector: id of the element on the DOM.
         -pd: Selected probability distribution.
+        -axis: Axis on which the histogram is computed.
     */
     this.scene = new THREE.Scene();
     this.camera = new THREE.OrthographicCamera( -0.1, 1.1, 1.1, -0.1, -0.1, 1.0 );
@@ -30,6 +31,7 @@ function Histogram() {
     this.database = "";
     this.selector = "";
     this.pd = 0;
+    this.axis = 0;
 
     /* Initialize the object.
         -database: The database with which the user is working with.
@@ -38,8 +40,9 @@ function Histogram() {
     this.init = function( database, axis ) {
         var bins = 0, needhtml = 1;
         this.setDataBase( database );
+        this.setAxis( axis );
         this.initCanvas();
-        this.getData( axis, needhtml, bins );
+        this.getData( needhtml, bins );
         this.Draw();
         this.bindEvents();
     };
@@ -70,10 +73,10 @@ function Histogram() {
         -bins: Number of bins requested to the server, if zero, the server 
             calculates them with the default formula.
         -needHtml: 1 if the html is needed, 0 otherwise. */
-    this.getData = function( axis, needHtml, bins ) {
+    this.getData = function( needHtml, bins ) {
         var requestData = {
             "db": this.database,
-            "axis": axis,
+            "axis": this.axis,
             "bins": bins,
             "needhtml": needHtml
         };
@@ -119,10 +122,20 @@ function Histogram() {
         this.addToDOM( html );
     };
 
+    /* Set the axis to analyze */
+    this.setAxis = function( axis ) {
+        this.axis = axis;
+    };
+
+    /* Get the axis analyzed */
+    this.getAxis = function() {
+        return this.axis;
+    };
+
     /* Set the interval of the x axis. */
     this.setXRange = function( xRange ) {
         this.xRange = xRange.slice(0);
-    }
+    };
 
     /* Set the selector with which the added element will be found on the DOM. e.g. "histogramplot0" */
     this.setIdSelector = function( selector ) {
@@ -187,7 +200,7 @@ function Histogram() {
         //  Get the number of bins
         var numBins = $( this ).val();
         // Request data to server
-        hist.getData( 0, 0, numBins );
+        hist.getData( 0, numBins );
         // Redraw
         hist.Draw();
     };
@@ -236,7 +249,7 @@ function Histogram() {
     /* Set the database to work with */
     this.setDataBase = function( database ) {
         this.database = database;
-    }
+    };
 
     /* Copy the freqs array in to the frequencies array. Then normalizes it using the maximum frequency */
     this.setFrequencies = function( freqs ) {
