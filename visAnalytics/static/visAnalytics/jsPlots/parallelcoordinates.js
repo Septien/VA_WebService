@@ -249,4 +249,4 @@ function Map( value, oRange ) {
     var norm = ( ( value - oRange[0] ) * ( unitRange[1] - unitRange[0] ) / ( oRange[1] - oRange[0] ) ) + unitRange[0];
 
     return norm;
-}
+};

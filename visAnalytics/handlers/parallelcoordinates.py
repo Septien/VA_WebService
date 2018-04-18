@@ -82,6 +82,3 @@ class ParallelCoordinates():
     def getNumberOfAxes(self):
         """ Get the number of dimensions on the db """
         return self.dimensions
-
-
-
