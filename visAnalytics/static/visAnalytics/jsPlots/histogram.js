@@ -284,7 +284,11 @@ function Histogram() {
         // Get the data
         hist.getData( needhtml, numbins );
         hist.Draw();
-        $( this.selector + " #axes" ).val( axis );
+        // Set the selected axis
+        $( hist.getIdSelector() + " #axes" ).val( axis );
+        // Set the returned number of bins
+        $( hist.getIdSelector() + " #nums").val( hist.getNumBins() );
+        console.log( hist.getIdSelector() );
     };
 
     /* Set the number of bins in the histogram */
