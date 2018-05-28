@@ -66,12 +66,12 @@ class Histogram():
             firstQ = self.data[int(fQPos)]
         else:
             up = round(fQPos)
-            firstQ = self.data[up - 1] + ((self.data[up - 1] - self.data[up]) / 4.0)
+            firstQ = self.data[up - 1] + ((self.data[up] - self.data[up - 1]) / 4.0)
         if tQPos == round(tQPos):
             thirdQ = self.data[int(tQPos)]
         else:
             up = round(tQPos)
-            thirdQ = self.data[up - 1] + (3 * (self.data[up - 1] - self.data[up]) / 4.0)
+            thirdQ = self.data[up - 1] + (3 * (self.data[up] - self.data[up - 1]) / 4.0)
         # Compute the IQR
         IQR = thirdQ - firstQ
         # Compute the number of classes and its length
