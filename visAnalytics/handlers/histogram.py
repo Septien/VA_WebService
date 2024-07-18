@@ -2,6 +2,7 @@
 Class for handling the operations related to the compute of the histogram.
 """
 import math as m
+import os
 
 class Histogram():
     """
@@ -32,15 +33,18 @@ class Histogram():
         """
         Loads the data and computes the range of the axis
         """
+        path = os.path.dirname(os.path.realpath(__file__))
         # Load
-        file = "/Users/Septien/Documents/Tesis/code/data/" + filename + ".data"
+        file = path + '/../data/' + filename + ".data"
         with open(file) as dataFile:
             for line in dataFile:
                 row = line.split(",")
                 self.numAxes = len(row)
                 d = row[axis]
-                if (d != '?'):
+                try:
                     self.data.append(float(d))
+                except:
+                    pass
         # Sort for further computation
         self.data.sort()
         # Get the range
@@ -75,7 +79,8 @@ class Histogram():
         # Compute the IQR
         IQR = thirdQ - firstQ
         # Compute the number of classes and its length
-        self.numBins = int(2 * IQR * m.pow(n, -1/3))
+        n = int(2 * IQR * m.pow(n, -1/3)) 
+        self.numBins = n if n > 0 else 1
         self.computeBinWidth()
 
 

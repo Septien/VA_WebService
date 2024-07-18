@@ -1,6 +1,7 @@
 """
 Module for handling the parallel coordinates graph on the server.
 """
+import os
 
 class ParallelCoordinates():
     """
@@ -24,20 +25,18 @@ class ParallelCoordinates():
             -filename: the name of the file.
             -coord: The coordinates of the plot to analyse, None if all are required. It is suppossed to be an array of integers
         """
-        file = "/Users/Septien/Documents/Tesis/code/data/" + filename + ".data"
+        path = os.path.dirname(os.path.realpath(__file__))
+        file = path + '/../data/' + filename + ".data"
         with open(file) as dataFile:
             for line in dataFile:
                 row = line.split(",")
-                incomplete = False
                 nRow = []
-                i = 0
-                for r in row:
-                    if r != '?':
+                try:
+                    for r in row:
                         nRow.append(float(r))
-                    else:
-                        incomplete = True
-                        break
-                if not incomplete:
+                except:
+                    continue
+                else:
                     self.data.append(nRow)
 
         self.dimensions = len(self.data[0])
@@ -46,7 +45,8 @@ class ParallelCoordinates():
 
     def loadLabels(self, filename):
         """ Loads the labels from file """
-        file = "/Users/Septien/Documents/Tesis/code/data/" + filename + ".labels.txt"
+        path = os.path.dirname(os.path.realpath(__file__))
+        file = path + '/../data/' + filename + ".labels.txt"
         with open(file) as labelsFile:
             for line in labelsFile:
                 row = line.split(",")
